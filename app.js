@@ -7,6 +7,7 @@ import cloudinary from "cloudinary";
 import connectToDB from "./src/config/db.js";
 import errorMiddleware from "./src/middlewares/error.Middleware.js";
 import mainRouter from "./src/routes/mainRoutes.js";
+import Razorpay from "razorpay";
 
 config();
 
@@ -43,6 +44,12 @@ cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// razorpay configuration
+export const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_SECRET,
 });
 
 app.listen(PORT, async () => {

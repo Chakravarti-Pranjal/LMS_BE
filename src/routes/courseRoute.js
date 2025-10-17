@@ -8,13 +8,22 @@ import {
   getLecturesByCourseId,
   updateCourse,
 } from "../controllers/courseController.js";
-import { authorisedRoles, isLoggedIn } from "../middlewares/auth.Middleware.js";
+import {
+  authorisedRoles,
+  authorisedSubscriber,
+  isLoggedIn,
+} from "../middlewares/auth.Middleware.js";
 import upload from "../middlewares/multer.Middleware.js";
 
 const courseRouter = Router();
 
 courseRouter.get("/", getAllCourses);
-courseRouter.get("/:id", isLoggedIn, getLecturesByCourseId);
+courseRouter.get(
+  "/:id",
+  isLoggedIn,
+  authorisedSubscriber,
+  getLecturesByCourseId
+);
 courseRouter.post(
   "/",
   isLoggedIn,
