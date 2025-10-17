@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import cloudinary from "cloudinary";
 import connectToDB from "./src/config/db.js";
 import errorMiddleware from "./src/middlewares/error.Middleware.js";
 import mainRouter from "./src/routes/mainRoutes.js";
@@ -13,6 +14,7 @@ const PORT = process.env.PORT;
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
@@ -35,6 +37,13 @@ app.get("/", (req, res) => {
 // });
 
 app.use(errorMiddleware);
+
+// cloudinary configuration
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 app.listen(PORT, async () => {
   await connectToDB();

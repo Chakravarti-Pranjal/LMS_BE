@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import crypto from "crypto-js";
 
 const userSchema = new Schema(
   {
@@ -39,6 +40,10 @@ const userSchema = new Schema(
     },
     forgotPasswordToken: String,
     forgotPasswordExpirary: Date,
+    subscription: {
+      id: String,
+      status: String,
+    },
   },
   {
     timestamps: true,
@@ -66,6 +71,21 @@ userSchema.methods = {
         expiresIn: process.env.JWT_EXPIRY,
       }
     );
+  },
+
+  comparePassword: async function (plainTextPass) {
+    return await bcrypt.compare(plainTextPass, this.password);
+  },
+
+  generatePasswordResetToken: async function () {
+    const resetToken = crypto.randomBytes(20).toStrig("hex");
+
+    this.forgotPasswordToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    this.forgotPasswordExpirary = Date.now() + 15 * 60 * 1000; // 15 min from now
   },
 };
 
