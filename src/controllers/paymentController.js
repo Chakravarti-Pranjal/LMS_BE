@@ -1,4 +1,4 @@
-import { razorpay } from "../../app.js";
+import { razorpay } from "../index.js";
 import Payment from "../models/paymentModel.js";
 import User from "../models/userModel.js";
 import AppError from "../utils/error.util.js";

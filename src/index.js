@@ -4,9 +4,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import cloudinary from "cloudinary";
-import connectToDB from "./src/config/db.js";
-import errorMiddleware from "./src/middlewares/error.Middleware.js";
-import mainRouter from "./src/routes/mainRoutes.js";
+import connectToDB from "./config/db.js";
+import errorMiddleware from "./middlewares/error.Middleware.js";
+import mainRouter from "./routes/mainRoutes.js";
 import Razorpay from "razorpay";
 
 config();
